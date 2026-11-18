@@ -1,0 +1,44 @@
+BUILD OK: CinemaServer/app/CinemaServer.jar + CinemaClient/app/CinemaClient.jar
+PASS RMI lookup + ping
+PASS reject AUTH
+PASS reject USERNAME_TAKEN
+PASS reject VALIDATION
+PASS reject LOGIN
+PASS normalized login
+PASS 6 movies / 84 shows
+PASS reject VALIDATION
+PASS reject VALIDATION
+PASS reject VALIDATION
+BOOK VE-8663CCF7-B6F9-4CFF-96A6-7B82E4FBC7C9 user=bob show=2030-05-16-P3-2 seats=[A1]
+PASS 20 simultaneous RMI requests: exactly one winner
+PASS real RMI callback received
+PASS reject SEAT_TAKEN
+PASS failed multi-seat booking leaves free seats untouched
+BOOK VE-E54BD380-D5EA-4898-8C82-7414AF7C01EF user=alice show=2030-05-16-P3-2 seats=[B1, B2]
+PASS idempotent retry + server price + sorted seats
+PASS reject REQUEST_REUSED
+PASS reject NOT_FOUND
+PASS booking privacy
+CANCEL VE-E54BD380-D5EA-4898-8C82-7414AF7C01EF
+PASS cancel releases seats
+PASS cancel retry is idempotent
+PASS old request cannot resurrect cancelled booking
+BOOK VE-930ED7B4-60AD-4854-B7A9-FE679AB1377C user=bob show=2030-05-16-P3-2 seats=[B1]
+PASS released seat can be rebooked
+BOOK VE-EC90EBED-7F25-4082-BD0D-FE6410597D51 user=alice show=2030-05-16-P1-3 seats=[A1]
+PASS same seat label in different show is independent
+SAVE FAILED: java.io.FileNotFoundException: /tmp/cinema-test-12436295869399533850/cinema.tmp (Is a directory)
+PASS reject STORAGE
+PASS failed disk write rolls back in-memory transaction
+PASS exclusive data directory lock
+BOOK VE-69C0A157-7091-4171-8F80-883E3FD1874F user=alice show=2030-05-16-P3-2 seats=[F1]
+PASS two separate Java clients: one win, one conflict
+BOOK VE-2917412E-8E48-46B2-8859-04DEEE8D654F user=alice show=2030-05-15-P1-0 seats=[E1]
+PASS reject CANCEL_CLOSED
+PASS reject CLOSED
+PASS reject AUTH
+PASS reject AUTH
+PASS users / bookings / cancellations survive restart
+PASS request deduplication survives restart
+PASS no plaintext passwords in persistence
+ALL 34 CHECKS PASSED
